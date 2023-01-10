@@ -100,6 +100,11 @@ public class BasicGameApp implements Runnable {
 		}
 	}
 
+	public void crash(){
+		if(jack.rec.intersects(astro.rec)){
+			System.out.println("crash");
+		}
+	}
 
 	public void moveThings()
 	{
@@ -107,9 +112,9 @@ public class BasicGameApp implements Runnable {
 		astro.bounce();
 		jack.bounce();
 		dog.bounce();
+		crash();
 
 	}
-
 
 	
    //Pauses or sleeps the computer for the amount specified in milliseconds
