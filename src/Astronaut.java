@@ -15,6 +15,7 @@ public class Astronaut {
     public int width;
     public int height;
     public boolean isAlive;            //a boolean to denote if the hero is alive or dead.
+    public Rectangle rec;
 
 
     // METHOD DEFINITION SECTION
@@ -26,13 +27,14 @@ public class Astronaut {
     //This is a SECOND constructor that takes 3 parameters.  This allows us to specify the hero's name and position when we build it.
     // if you put in a String, an int and an int the program will use this constructor instead of the one above.
     public Astronaut(int pXpos, int pYpos) {
-        xpos = pXpos;
+        xpos = pXpos; //parameters
         ypos = pYpos;
         dx =1;
         dy =0;
         width = 60;
         height = 60;
         isAlive = true;
+        rec = new Rectangle(xpos,ypos,height,width);
  
     } // constructor
 
@@ -40,7 +42,7 @@ public class Astronaut {
     public void move() {
         xpos = xpos + dx;
         ypos = ypos + dy;
- 
+        rec = new Rectangle(xpos,ypos,height,width);
     }
 
     public void wrap(){
@@ -49,6 +51,7 @@ public class Astronaut {
         }
         xpos = xpos + dx;
         ypos = ypos + dy;
+        rec = new Rectangle(xpos,ypos,height,width);
     }
     public void bounce(){
         if(xpos>1000-width){
@@ -57,7 +60,7 @@ public class Astronaut {
         if(xpos<=0){
             dx=-dx;
         }
-        if(ypos>700-59){
+        if(ypos>720-width){
             dy=-dy;
         }
         if(ypos<=0){
@@ -65,6 +68,7 @@ public class Astronaut {
         }
         xpos = xpos + dx;
         ypos = ypos + dy;
+        rec = new Rectangle(xpos,ypos,height,width);
     }
 }
 

@@ -75,8 +75,10 @@ public class BasicGameApp implements Runnable {
 		dog = new Astronaut (160,354);
 		dog.height = 80;
 		dog.width = 100;
-		jack.dy = 1;
-		jack.dx = 0;
+		jack.dy = -1;
+		jack.dx = 3;
+		dog.dy = 2;
+		astro.dx = 3;
 
 
 	}// BasicGameApp()
@@ -101,18 +103,50 @@ public class BasicGameApp implements Runnable {
 	}
 
 	public void crash(){
-		if(jack.rec.intersects(astro.rec)){
+		//System.out.println("w: " + dog.rec.width+"h: " +dog.rec.height);
+		System.out.println("w: " + astro.rec.width+"h: " +astro.rec.height);
+
+		if(jack.rec.intersects(astro.rec) && jack.isAlive == true && astro.isAlive == true)
+		{
 			System.out.println("crash");
+			astro.dx = -1*astro.dx;
+			astro.dy = -1*astro.dy;
+			jack.dx = -jack.dx;
+			jack.isAlive = false;
 		}
+		if(jack.rec.intersects(dog.rec))
+		{
+			System.out.println("crash");
+			System.out.println("crash");
+			dog.dx = -1*dog.dx;
+			dog.dy = -1*dog.dy;
+			jack.dx = -jack.dx;
+			jack.dy = -jack.dy;
+		}
+		if(astro.rec.intersects(dog.rec))
+		{
+		//	System.out.println("crash");
+			System.out.println("crash");
+			dog.dx = -1*dog.dx;
+			dog.dy = -1*dog.dy;
+			astro.dy = -astro.dy;
+			expand();
+		}
+	}
+
+	public void expand(){
+		astro.height = (int)(1.5*astro.height);
 	}
 
 	public void moveThings()
 	{
       //calls the move( ) code in the objects
+		//expand();
+		crash();
 		astro.bounce();
 		jack.bounce();
 		dog.bounce();
-		crash();
+
 
 	}
 
@@ -166,11 +200,14 @@ public class BasicGameApp implements Runnable {
       //draw the image of the astronaut
 		g.drawImage(background,0,0,WIDTH,HEIGHT,null);
 		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
-		g.drawImage(astroPic, jack.xpos, jack.ypos, jack.width, jack.height, null);
 		g.drawImage(dogPic,dog.xpos, dog.ypos, dog.width, dog.height, null);
-		g.setColor(Color.CYAN);
+		if(jack.isAlive == true){
+			g.drawImage(astroPic, jack.xpos, jack.ypos, jack.width, jack.height, null);
+			g.draw(new Rectangle(jack.xpos,jack.ypos,jack.width,jack.height));
+			g.setColor(Color.CYAN);
+		}
+
 		g.draw(new Rectangle(astro.xpos,astro.ypos,astro.width,astro.height));
-		g.draw(new Rectangle(jack.xpos,jack.ypos,jack.width,jack.height));
 		g.draw(new Rectangle(dog.xpos, dog.ypos, dog.width, dog.height));
 		g.dispose();
 
